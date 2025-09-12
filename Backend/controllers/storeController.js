@@ -1,0 +1,107 @@
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+// For Normal Users: Get list of stores with my rating
+export const getStoresForUser = async (req, res) => {
+    const { search, sortBy = 'name', order = 'asc' } = req.query;
+    const where = search ? { OR: [{ name: { contains: search } }, { address: { contains: search } }] } : {};
+    
+    try {
+        const stores = await prisma.store.findMany({
+            where,
+            include: { ratings: true },
+            orderBy: { [sortBy]: order }
+        });
+
+        const result = stores.map(store => {
+            const totalRating = store.ratings.reduce((acc, r) => acc + r.value, 0);
+            const averageRating = store.ratings.length > 0 ? (totalRating / store.ratings.length).toFixed(1) : '0.0';
+            const userSubmittedRatingObj = store.ratings.find(r => r.userId === req.user.id);
+            return {
+                id: store.id,
+                name: store.name,
+                address: store.address,
+                overallRating: parseFloat(averageRating),
+                userSubmittedRating: userSubmittedRatingObj ? userSubmittedRatingObj.value : null
+            };
+        });
+        res.json(result);
+    } catch (error) { res.status(500).json({ message: 'Server Error', error: error.message }); }
+};
+
+// For Normal Users: Rate or update a rating for a store
+export const rateStore = async (req, res) => {
+    const { storeId } = req.params;
+    const { value } = req.body;
+    try {
+        const rating = await prisma.rating.upsert({
+            where: { userId_storeId: { userId: req.user.id, storeId: parseInt(storeId) } },
+            update: { value },
+            create: { value, userId: req.user.id, storeId: parseInt(storeId) },
+        });
+        res.status(201).json(rating);
+    } catch (error) { res.status(500).json({ message: 'Server Error' }); }
+};
+
+// For Store Owners: Get their store's dashboard
+export const getOwnerDashboard = async (req, res) => {
+    const { page = 1, limit = 10, sortBy = 'name', order = 'asc' } = req.query;
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const skip = (pageNum - 1) * limitNum;
+
+    try {
+        const store = await prisma.store.findUnique({
+            where: { ownerId: req.user.id },
+        });
+
+        if (!store) {
+            return res.status(404).json({ message: 'Store not found for this owner.' });
+        }
+
+        const [ratingsData, aggregateData] = await Promise.all([
+            prisma.rating.findMany({
+                where: { storeId: store.id },
+                skip,
+                take: limitNum,
+                orderBy: {
+                    [sortBy === 'rating' ? 'value' : 'user']: sortBy === 'rating' ? order : { [sortBy]: order },
+                },
+                include: {
+                    
+                    user: { select: { name: true, email: true, address: true } } 
+                }
+            }),
+            prisma.rating.aggregate({
+                _avg: { value: true },
+                _count: { value: true },
+                where: { storeId: store.id },
+            })
+        ]);
+
+        const totalItems = aggregateData._count.value;
+        const averageRating = aggregateData._avg.value || 0;
+        
+        res.json({
+            storeName: store.name,
+            averageRating: parseFloat(averageRating.toFixed(1)),
+            ratings: {
+              
+                data: ratingsData.map(r => ({
+                    name: r.user.name,
+                    email: r.user.email,
+                    address: r.user.address, 
+                    rating: r.value
+                })),
+                pagination: {
+                    currentPage: pageNum,
+                    totalPages: Math.ceil(totalItems / limitNum),
+                    totalItems,
+                }
+            }
+        });
+    } catch (error) { 
+        console.error(error);
+        res.status(500).json({ message: 'Server Error', error: error.message }); 
+    }
+};
