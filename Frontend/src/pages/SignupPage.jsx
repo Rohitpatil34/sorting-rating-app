@@ -22,7 +22,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-white to-blue-300 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
           Create an Account 
@@ -36,7 +36,7 @@ const SignupPage = () => {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-         
+          {/* Name */}
           <div>
             <input
               {...register("name", {
@@ -52,7 +52,7 @@ const SignupPage = () => {
             )}
           </div>
 
-          
+          {/* Email */}
           <div>
             <input
               {...register("email", {
@@ -71,7 +71,7 @@ const SignupPage = () => {
             )}
           </div>
 
-          
+          {/* Address */}
           <div>
             <textarea
               {...register("address", {
@@ -87,7 +87,7 @@ const SignupPage = () => {
             )}
           </div>
 
-          
+          {/* Password */}
           <div>
             <div className="relative">
               <input
@@ -115,7 +115,7 @@ const SignupPage = () => {
             )}
           </div>
 
-         
+          {/* Submit */}
           <button
             type="submit"
             disabled={isLoading}
