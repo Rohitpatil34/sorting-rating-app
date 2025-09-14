@@ -57,11 +57,11 @@ Make sure you have the following installed:
 ## Installation and Setup
 
 ### 1. Clone the Repository
-```bash
+
 git clone https://github.com/Rohitpatil34/sorting-rating-app.git
 cd sorting-rating-app
 
-```bash
+
 ### 2. Backend Setup
 # Navigate to backend
 cd backend
@@ -101,3 +101,4 @@ VITE_API_URL=http://localhost:5000/api
 
 ## Start Frontend Server
 npm run dev
+
