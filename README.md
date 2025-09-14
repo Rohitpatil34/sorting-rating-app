@@ -1,4 +1,4 @@
-# ⭐ Store Rating App
+# ⭐ Store Rating Platform
 
 ## 📌 Introduction
 The **Store Rating Platform** is a full-stack web application that enables users to register, log in, and submit ratings (1–5) for stores registered on the platform.  
@@ -62,20 +62,64 @@ Make sure you have the following installed:
 ## ⚙️ Installation and Setup
 
 ### 1️⃣ Clone the Repository
-
+```bash
 git clone https://github.com/Rohitpatil34/sorting-rating-app.git
 cd sorting-rating-app
+```
 
-### 2️⃣ Install Dependencies
- # Backend
+### 2️⃣ Backend Setup
 ```bash
+# Navigate to backend
 cd backend
+
+# Install dependencies
 npm install
+```
 
-### 3️⃣ Configure Environment Variables
-# Backend .env
+#### 🔑 Configure Environment Variables
+Create a `.env` file inside the backend directory (you can copy from example.env):
 
-Inside the backend directory, create a .env file (you can copy from example.env):
+```env
+# .env (Example for MySQL)
 DATABASE_URL="mysql://YOUR_USER:YOUR_PASSWORD@localhost:3306/store_ratings_db"
 JWT_SECRET="your_super_secret_key_that_is_long_and_random"
+```
+
+#### 🗄️ Database Migration
+Make sure MySQL is running and you've created a database named `store_ratings_db` (or update the name in DATABASE_URL).
+Run Prisma migrations to set up tables:
+
+```bash
+npx prisma migrate dev
+```
+
+This will also generate the Prisma Client.
+
+#### ▶️ Start Backend Server
+```bash
+npm run dev
+```
+
+### 3️⃣ Frontend Setup
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+```
+
+#### 🌍 Configure API Connection
+Create a `.env` file in the frontend directory (copy from example.env) and set:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+#### ▶️ Start Frontend Server
+```bash
+npm run dev
+```
+
+---
 
