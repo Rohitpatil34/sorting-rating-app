@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   const activeLinkClasses = "bg-blue-500 text-white hover:bg-blue-600";
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-100">
       
       <aside className="hidden md:flex fixed left-0 top-16 h-screen w-64 bg-white p-4 shadow-md flex-col">
         <h2 className="text-xl font-bold mb-6 text-gray-800">Admin Panel</h2>
