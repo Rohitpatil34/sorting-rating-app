@@ -55,7 +55,7 @@ This project demonstrates **full-stack development skills** such as:
 ## 📦 Prerequisites
 Make sure you have the following installed:
 - [Node.js](https://nodejs.org/) (v16+)  
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)  
+- [npm](https://www.npmjs.com/)   
 - [MySQL](https://dev.mysql.com/downloads/)  
 
 ---
@@ -123,5 +123,6 @@ npm run dev
 ```
 
 ---
+
 
 
