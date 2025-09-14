@@ -1,4 +1,4 @@
-# ⭐ Sorting Rating App
+# ⭐ Store Rating App
 
 ## 📌 Introduction
 The **Store Rating Platform** is a full-stack web application that enables users to register, log in, and submit ratings (1–5) for stores registered on the platform.  
@@ -62,6 +62,13 @@ Make sure you have the following installed:
 ## ⚙️ Installation and Setup
 
 ### 1️⃣ Clone the Repository
-```bash
+
 git clone https://github.com/Rohitpatil34/sorting-rating-app.git
 cd sorting-rating-app
+
+2️⃣ Install Dependencies
+Backend
+cd backend
+npm install
+
+```bash
