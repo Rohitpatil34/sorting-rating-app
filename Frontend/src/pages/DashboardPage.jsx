@@ -35,7 +35,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-6 min-h-screen bg-gray-50 pt-20 md:pt-20">
+    <div className="container mx-auto p-4 md:p-6 min-h-screen bg-gray-100 pt-20 md:pt-20">
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 p-4 bg-white rounded-xl shadow-sm">
         <div className="mb-4 md:mb-0">
