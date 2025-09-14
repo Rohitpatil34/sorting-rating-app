@@ -68,8 +68,14 @@ cd sorting-rating-app
 
 ### 2️⃣ Install Dependencies
  # Backend
+
 cd backend
 npm install
 
-```bash
+### 3️⃣ Configure Environment Variables
+# Backend .env
 
+Inside the backend directory, create a .env file (you can copy from example.env):
+DATABASE_URL="mysql://YOUR_USER:YOUR_PASSWORD@localhost:3306/store_ratings_db"
+JWT_SECRET="your_super_secret_key_that_is_long_and_random"
+```bash
