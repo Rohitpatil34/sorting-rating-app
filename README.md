@@ -66,9 +66,10 @@ Make sure you have the following installed:
 git clone https://github.com/Rohitpatil34/sorting-rating-app.git
 cd sorting-rating-app
 
-2️⃣ Install Dependencies
-Backend
+### 2️⃣ Install Dependencies
+ # Backend
 cd backend
 npm install
 
 ```bash
+
