@@ -5,6 +5,7 @@ The **Store Rating Platform** is a full-stack web application that enables users
 The system is role-based, supporting three roles: **System Administrator, Normal User, and Store Owner**.  
 Each role has access to specific functionalities, making the platform secure and organized.
 
+
 This project demonstrates **full-stack development skills** such as:
 - Backend API design  
 - Database modeling  
@@ -122,4 +123,5 @@ npm run dev
 ```
 
 ---
+
 
