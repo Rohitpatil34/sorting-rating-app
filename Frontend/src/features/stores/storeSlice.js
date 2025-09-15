@@ -16,6 +16,8 @@ export const fetchStores = createAsyncThunk(
   async (filters = {}, thunkAPI) => {
     try {
       const response = await api.get('/stores', { params: filters }); 
+      console.log(response);
+      
       return response; 
       
     
@@ -72,8 +74,8 @@ const storeSlice = createSlice({
       .addCase(fetchStores.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.stores = action.payload.data || [];
-        state.pagination = action.payload.pagination || {
+        state.stores = action.payload.data.data || [];
+        state.pagination = action.payload.data.pagination || {
           currentPage: 1,
           totalPages: 1,
           totalItems: 0,
