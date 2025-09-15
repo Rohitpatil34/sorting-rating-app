@@ -3,15 +3,27 @@ const prisma = new PrismaClient();
 
 // For Normal Users: Get list of stores with my rating
 export const getStoresForUser = async (req, res) => {
-    const { search, sortBy = 'name', order = 'asc' } = req.query;
-    const where = search ? { OR: [{ name: { contains: search } }, { address: { contains: search } }] } : {};
+    const { name, address, sortBy = 'name', order = 'asc', page = 1, limit = 10 } = req.query;
+    
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const skip = (pageNum - 1) * limitNum;
+
+    const where = {};
+    if (name) where.name = { contains: name };
+    if (address) where.address = { contains: address };
     
     try {
-        const stores = await prisma.store.findMany({
-            where,
-            include: { ratings: true },
-            orderBy: { [sortBy]: order }
-        });
+        const [stores, totalItems] = await Promise.all([
+            prisma.store.findMany({
+                where,
+                skip,
+                take: limitNum,
+                include: { ratings: true },
+                orderBy: { [sortBy]: order }
+            }),
+            prisma.store.count({ where })
+        ]);
 
         const result = stores.map(store => {
             const totalRating = store.ratings.reduce((acc, r) => acc + r.value, 0);
@@ -25,7 +37,16 @@ export const getStoresForUser = async (req, res) => {
                 userSubmittedRating: userSubmittedRatingObj ? userSubmittedRatingObj.value : null
             };
         });
-        res.json(result);
+        
+        res.json({
+            data: result,
+            pagination: {
+                currentPage: pageNum,
+                totalPages: Math.ceil(totalItems / limitNum),
+                totalItems,
+            }
+        });
+
     } catch (error) { res.status(500).json({ message: 'Server Error', error: error.message }); }
 };
 
