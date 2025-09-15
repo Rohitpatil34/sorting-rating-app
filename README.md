@@ -51,6 +51,25 @@ This project demonstrates **full-stack development skills** such as:
 - **Styling:** Tailwind CSS  
 
 ---
+## 🌐 Live Demo
+
+👉 https://store-rating-app-e4py.vercel.app/
+
+---
+## 🔑 Test Login Credentials
+
+Use the following credentials to explore the application with different roles:
+
+| Email                                                       | Role        | Password    |
+| ----------------------------------------------------------- | ----------- | ----------- |
+| **[Ashanachavan@gmail.com](mailto:Ashanachavan@gmail.com)** | Normal User | `Pass@123`  |
+| **[admin@gmail.com](mailto:admin@gmail.com)**               | Admin       | `Pass@1234` |
+| **[sunbeam@gmail.com](mailto:sunbeam@gmail.com)**           | Store Owner | `Pass@1234` |
+
+---
+
+
+
 
 ## 📦 Prerequisites
 Make sure you have the following installed:
@@ -123,6 +142,13 @@ npm run dev
 ```
 
 ---
+
+
+
+
+
+
+
 
 
 
